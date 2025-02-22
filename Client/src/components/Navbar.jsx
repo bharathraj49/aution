@@ -31,10 +31,10 @@ const Navbar = () => {
                 <Link className="nav-link fw-semibold" to="/auction" onClick={toggleMenu}>Dashboard</Link>
             </li>
             {user ? (
-                <li className="nav-item">
-                    <button className="nav-link btn btn-link text-decoration-none text-dark fw-bold" onClick={handleLogout}>
+                <li className="nav-item mb-2">
+                    <Link className="nav-link text-primary text-dark fw-bold" onClick={handleLogout}>
                         {user.username} Logout
-                    </button>
+                    </Link>
                 </li>
             ) : (
                 <>
