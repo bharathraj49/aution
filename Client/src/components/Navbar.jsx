@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { FaGavel, FaUserCircle, FaSignInAlt, FaUserPlus, FaTachometerAlt } from 'react-icons/fa';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -28,21 +29,47 @@ const Navbar = () => {
     const navItems = (
         <ul className="navbar-nav w-100">
             <li className="nav-item mb-2">
-                <Link className="nav-link fw-semibold" to="/auction" onClick={toggleMenu}>Dashboard</Link>
+                <Link 
+                    className="nav-link d-flex align-items-center" 
+                    to="/auction" 
+                    onClick={toggleMenu}
+                >
+                    <FaTachometerAlt className="me-2" />
+                    Dashboard
+                </Link>
             </li>
             {user ? (
                 <li className="nav-item mb-2">
-                    <Link className="nav-link text-primary text-dark fw-bold" onClick={handleLogout}>
-                        {user.username} Logout
+                    <Link 
+                        className="nav-link d-flex align-items-center" 
+                        onClick={handleLogout}
+                    >
+                        <FaUserCircle className="me-2" />
+                        {user.username} 
+                        <FaSignInAlt className="ms-2" />
                     </Link>
                 </li>
             ) : (
                 <>
                     <li className="nav-item mb-2">
-                        <Link className="nav-link text-primary fw-bold" to="/login" onClick={toggleMenu}>Login</Link>
+                        <Link 
+                            className="nav-link d-flex align-items-center" 
+                            to="/login" 
+                            onClick={toggleMenu}
+                        >
+                            <FaSignInAlt className="me-2" />
+                            Login
+                        </Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link text-primary fw-bold" to="/register" onClick={toggleMenu}>Register</Link>
+                        <Link 
+                            className="nav-link d-flex align-items-center" 
+                            to="/register" 
+                            onClick={toggleMenu}
+                        >
+                            <FaUserPlus className="me-2" />
+                            Register
+                        </Link>
                     </li>
                 </>
             )}
@@ -50,15 +77,23 @@ const Navbar = () => {
     );
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top m-2">
+        <nav className="navbar navbar-expand-lg navbar-dark fixed-top m-2">
             <div className="container-fluid d-flex justify-content-between align-items-center">
-                <Link className="navbar-brand fw-bold text-primary me-5" to="/">CollabTool</Link>
+                <Link className="navbar-brand d-flex align-items-center fw-bold" to="/">
+                    <FaGavel className="me-2 brand-icon" />
+                    <span className="brand-text">AuctionPro</span>
+                </Link>
                 <div className="d-none d-lg-flex">{navItems}</div>
-                <button className="navbar-toggler border-0 shadow-sm" type="button" onClick={toggleMenu}>
+                <button 
+                    className="navbar-toggler border-0" 
+                    type="button" 
+                    onClick={toggleMenu}
+                >
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 {isOpen && (
-                    <div className="position-absolute top-100 start-0 w-100 bg-white shadow-lg rounded-3 mt-2 p-3 d-lg-none">
+                    <div className="position-absolute top-100 start-0 w-100 bg-black shadow-lg rounded-3 mt-2 p-3 d-lg-none mobile-menu"
+                         style={{ border: '1px solid var(--red-primary)' }}>
                         {navItems}
                     </div>
                 )}

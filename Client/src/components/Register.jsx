@@ -1,70 +1,125 @@
 import React, { useState } from 'react';
-import { Nav } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { FaUser, FaLock, FaEnvelope, FaUserPlus, FaPhone } from 'react-icons/fa';
 
 const Register = () => {
-    const [name, setName] = useState('');
-    const Navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [formData, setFormData] = useState({
+        username: '',
+        email: '',
+        phone: '',
+        password: '',
+        confirmPassword: ''
+    });
 
-    const handleRegister = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        Navigate('/auction');
-        // Registration logic (commented out for now)
+        // Handle registration logic here
+        console.log(formData);
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-            <div className="bg-white p-4 rounded-4 shadow-lg" style={{ width: '350px' }}>
-                <h2 className="text-center text-primary fw-bold mb-3">Register</h2>
-                <form onSubmit={handleRegister}>
-                    <div className="mb-3">
-                        <label htmlFor="name" className="form-label">Username</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="name"
-                            placeholder="Enter your username"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Email address</label>
-                        <input
-                            type="email"
-                            className="form-control"
-                            id="email"
-                            placeholder="Enter your email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label">Password</label>
-                        <input
-                            type="password"
-                            className="form-control"
-                            id="password"
-                            placeholder="Enter your password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <button type="submit" className="btn btn-primary w-100" onClick={handleRegister}>Register</button>
-                </form>
-                {error && <p className="text-danger mt-3 text-center">{error}</p>}
-                <p className="text-center mt-3">
-                    Already have an account? <Link to="/login" className="text-primary">Login</Link>
-                </p>
-            </div>
-        </div>
+        <Container fluid className="auth-container">
+            <Row className="justify-content-center align-items-center min-vh-100">
+                <Col md={8} lg={6} xl={5}>
+                    <Card className="auth-card">
+                        <Card.Body className="p-5">
+                            <div className="text-center mb-4">
+                                <h2 className="text-theme mb-3">
+                                    <FaUserPlus className="me-2" />
+                                    Create Account
+                                </h2>
+                                <p className="text-secondary">Join our auction community today</p>
+                            </div>
+
+                            <Form onSubmit={handleSubmit}>
+                                <Form.Group className="mb-4">
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <FaUser className="text-theme" />
+                                        </span>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Username"
+                                            value={formData.username}
+                                            onChange={(e) => setFormData({...formData, username: e.target.value})}
+                                        />
+                                    </div>
+                                </Form.Group>
+
+                                <Form.Group className="mb-4">
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <FaEnvelope className="text-theme" />
+                                        </span>
+                                        <Form.Control
+                                            type="email"
+                                            placeholder="Email Address"
+                                            value={formData.email}
+                                            onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                        />
+                                    </div>
+                                </Form.Group>
+
+                                <Form.Group className="mb-4">
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <FaPhone className="text-theme" />
+                                        </span>
+                                        <Form.Control
+                                            type="tel"
+                                            placeholder="Phone Number"
+                                            value={formData.phone}
+                                            onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                                        />
+                                    </div>
+                                </Form.Group>
+
+                                <Form.Group className="mb-4">
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <FaLock className="text-theme" />
+                                        </span>
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="Password"
+                                            value={formData.password}
+                                            onChange={(e) => setFormData({...formData, password: e.target.value})}
+                                        />
+                                    </div>
+                                </Form.Group>
+
+                                <Form.Group className="mb-4">
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <FaLock className="text-theme" />
+                                        </span>
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="Confirm Password"
+                                            value={formData.confirmPassword}
+                                            onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                                        />
+                                    </div>
+                                </Form.Group>
+
+                                <Button variant="red" type="submit" className="w-100 mb-4">
+                                    <FaUserPlus className="me-2" />
+                                    Create Account
+                                </Button>
+
+                                <div className="text-center text-secondary">
+                                    Already have an account?{' '}
+                                    <Link to="/login" className="text-theme text-decoration-none">
+                                        Sign In
+                                    </Link>
+                                </div>
+                            </Form>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

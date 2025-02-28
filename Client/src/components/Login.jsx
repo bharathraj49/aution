@@ -1,57 +1,92 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { FaUser, FaLock, FaSignInAlt } from 'react-icons/fa';
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
 
-    const handleLogin = async (e) => {
-        // e.preventDefault();
-         try {
-            localStorage.setItem('user', JSON.stringify({ useremail: email}));
-            navigate('/auction');
-        } catch (error) {
-             setError(error.response?.data?.message || 'An unexpected error occurred. Please try again.');
-        }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Handle login logic here
+        console.log(formData);
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-            <div className="card p-4 shadow-lg" style={{ width: '350px' }}>
-                <h2 className="text-center text-primary mb-4">Login</h2>
-                {error && <p className="alert alert-danger text-center">{error}</p>}
-                <form onSubmit={handleLogin}>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label fw-semibold">Email address</label>
-                        <input 
-                            type="email" 
-                            className="form-control" 
-                            id="email" 
-                            value={email} 
-                            onChange={(e) => setEmail(e.target.value)} 
-                            required 
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label fw-semibold">Password</label>
-                        <input 
-                            type="password" 
-                            className="form-control" 
-                            id="password" 
-                            value={password} 
-                            onChange={(e) => setPassword(e.target.value)} 
-                            required 
-                        />
-                    </div>
-                    <button type="submit" className="btn btn-primary w-100">Login</button>
-                </form>
-                <p className="text-center mt-3">
-                    Don't have an account? <a href="/register" className="text-primary fw-bold">Register</a>
-                </p>
-            </div>
-        </div>
+        <Container fluid className="auth-container">
+            <Row className="justify-content-center align-items-center min-vh-100">
+                <Col md={8} lg={6} xl={5}>
+                    <Card className="auth-card">
+                        <Card.Body className="p-5">
+                            <div className="text-center mb-4">
+                                <h2 className="text-theme mb-3">
+                                    <FaSignInAlt className="me-2" />
+                                    Welcome Back
+                                </h2>
+                                <p className="text-secondary">Please sign in to continue</p>
+                            </div>
+
+                            <Form onSubmit={handleSubmit}>
+                                <Form.Group className="mb-4">
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <FaUser className="text-theme" />
+                                        </span>
+                                        <Form.Control
+                                            type="email"
+                                            className="form-control text-themes"
+                                            placeholder="Email Address"
+                                            value={formData.email}
+                                            onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                        />
+                                    </div>
+                                </Form.Group>
+
+                                <Form.Group className="mb-4">
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <FaLock className="text-theme" />
+                                        </span>
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="Password"
+                                            value={formData.password}
+                                            onChange={(e) => setFormData({...formData, password: e.target.value})}
+                                        />
+                                    </div>
+                                </Form.Group>
+
+                                <Form.Group className="mb-4 d-flex justify-content-between align-items-center">
+                                    <Form.Check
+                                        type="checkbox"
+                                        label="Remember me"
+                                        className="text-secondary"
+                                    />
+                                    <Link to="/forgot-password" className="text-theme text-decoration-none">
+                                        Forgot Password?
+                                    </Link>
+                                </Form.Group>
+
+                                <Button variant="red" type="submit" className="w-100 mb-4">
+                                    <FaSignInAlt className="me-2" />
+                                    Sign In
+                                </Button>
+
+                                <div className="text-center text-secondary">
+                                    Don't have an account?{' '}
+                                    <Link to="/register" className="text-theme text-decoration-none">
+                                        Sign Up
+                                    </Link>
+                                </div>
+                            </Form>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 
